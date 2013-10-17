@@ -1,0 +1,30 @@
+<wicket:panel>
+		<table class="table table-striped">
+			<thead>
+				<th>Marca</th>
+				<th>Modelo</th>
+				<th>Cor</th>
+				<th>Ano</th>
+				<th>Valor</th>
+				<th>Ar-Condicionado</th>
+				<th>Direção Hidraulica</th>
+				<th>Vidros e Travas</th>
+				<th colspan="2">Opções</th>
+			</thead>
+			<tbody>
+				<tr wicket:id="carros">
+					<td><span wicket:id="marca"></span></td>
+					<td><span wicket:id="modelo"></span></td>
+					<td><span wicket:id="cor"></span></td>
+					<td><span wicket:id="ano"></span></td>
+					<td><span wicket:id="valor"></span></td>
+					<td><span wicket:id="arCondicionado"></span></td>
+					<td><span wicket:id="direcaoHidraulica"></span></td>
+					<td><span wicket:id="vtEletrico"></span></td>
+					<td><a class="btn btn-link" wicket:id="excluir">Excluir</a></td>
+					<td><a class="btn btn-link" wicket:id="alterar">Alterar</a></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="pagination-centered" wicket:id="paginacao"></div>
+</wicket:panel>
