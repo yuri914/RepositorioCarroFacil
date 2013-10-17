@@ -1,5 +1,6 @@
 <wicket:extend>
 	<form class="form-inline" wicket:id="consultaFormulario">
+	<div wicket:id="mensagens"></div>
 		<fieldset>
 			<legend>Consulta de Automoveis</legend>
 			<label wicket:for="marcaConsulta">Marca: </label> 
@@ -19,6 +20,7 @@
 			<div id="divBotoesVoltar">
 			<label wicket:for="registrosPagina">Registros por Página</label>
 			<select wicket:id="registrosPagina"></select>
+			<input type="submit" value="Gerar Relatório" wicket:id="btRelatorio"/>
 			</div>
 	</form>
 </wicket:extend>

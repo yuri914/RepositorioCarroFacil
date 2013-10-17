@@ -4,19 +4,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
-import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.image.Image;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.request.resource.ContextRelativeResource;
 
+import br.com.cast.componentes.util.RelatorioFactory;
 import br.com.cast.model.Carro;
 import br.com.cast.model.Marca;
 import br.com.cast.model.Modelo;
@@ -33,10 +35,14 @@ public abstract class ConsultaCarroForm extends Form {
 	private CheckBox checkVtEletrico;
 	private ConsultaCarroGridPanel gridPanelCarro;
 	private Carro carroConsulta = new Carro();
-	private Image imageTest;
+	private FeedbackPanel feedback;
 	
 	public ConsultaCarroForm(String id) {
 		super(id);
+		
+		feedback = new FeedbackPanel("mensagens");
+		feedback.setOutputMarkupId(true);
+		add(feedback);
 		
 		dropModelo = new DropDownChoice<Modelo>("modeloConsulta");
 		dropModelo.setChoiceRenderer(new ChoiceRenderer<Modelo>("descricao"));
@@ -61,9 +67,6 @@ public abstract class ConsultaCarroForm extends Form {
 			}
 		});
 		add(dropRegistrosPaginacao);
-		
-		imageTest = new Image("imagemTeste", new ContextRelativeResource("C:/Users/Yuri/Pictures/paisagem.jpg"));
-		add(imageTest);
 		
 		dropMarca = new DropDownChoice<Marca>("marcaConsulta");
 		dropMarca.setChoices(buscarMarcas());
@@ -134,6 +137,18 @@ public abstract class ConsultaCarroForm extends Form {
 				
 			}
 		});
+		
+		add(new Button("btRelatorio"){
+
+			private static final long serialVersionUID = 5428718389845909496L;
+
+			@Override
+			public void onSubmit() {
+				String relatorioURL = "C:\\Users\\Yuri\\Estudo\\WorkSpaces\\Git WorkSpace\\SistemaCarroFacil\\src\\main\\java\\br\\com\\cast\\componentes\\util\\relatorios\\RelatorioCarroFacil.jasper";
+				RelatorioFactory.gerarRelatorio((HttpServletResponse) getResponse().getContainerResponse(), listarCarros(), relatorioURL, null);
+			}
+		});
+		
 	}
 	
 	protected abstract void excluirCarroBanco(Carro atual);
