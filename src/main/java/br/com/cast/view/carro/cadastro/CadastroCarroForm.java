@@ -59,7 +59,7 @@ public abstract class CadastroCarroForm extends Form<Carro> {
 		valor = new TextField<Double>("valor");
 		valor.setModel(new PropertyModel<Double>(carro, "valor"));
 		valor.setRequired(true);
-		
+		add(valor);
 		
 		dropCor = new DropDownChoice<Cor>("cor");
 		dropCor.setChoices(buscarCores());
