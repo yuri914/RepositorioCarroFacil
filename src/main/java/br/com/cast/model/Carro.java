@@ -47,8 +47,11 @@ public class Carro implements Serializable {
 	@Column(name = "DIRECAO_HIDRAULICA")
 	private boolean direcaoHidraulica;
 
-	@Column(name = "VT_ELETRICAS")
-	private boolean vtEletrico;
+	@Column(name = "VIDROS_ELETRICOS")
+	private boolean vidrosEletricos;
+	
+	@Column(name = "TRAVAS_ELETRICAS")
+	private boolean travasEletricas;
 	
 	@Transient
 	private String arFormatado;
@@ -91,12 +94,20 @@ public class Carro implements Serializable {
 		this.direcaoHidraulica = direcaoHidraulica;
 	}
 
-	public boolean isVtEletrico() {
-		return vtEletrico;
+	public boolean isVidrosEletricos() {
+		return vidrosEletricos;
+	}
+	
+	public void setVidrosEletricos(boolean vidrosEletricos) {
+		this.vidrosEletricos = vidrosEletricos;
+	}
+	
+	public boolean isTravasEletricas() {
+		return travasEletricas;
 	}
 
-	public void setVtEletrico(boolean vtEletrico) {
-		this.vtEletrico = vtEletrico;
+	public void setTravasEletricas(boolean travasEletricas) {
+		this.travasEletricas = travasEletricas;
 	}
 
 	public Modelo getModelo() {
@@ -141,13 +152,22 @@ public class Carro implements Serializable {
 		return direcaoFormatada;
 	}
 
-	public String getVtFormatado() {
-		String vtFormatado = null;
-		if(isArCondicionado())
-			vtFormatado = "Sim";
+	public String getVidrosFormatados() {
+		String vidrosFormatados = null;
+		if(isVidrosEletricos())
+			vidrosFormatados = "Sim";
 		else 
-			vtFormatado = "Não";
-		return vtFormatado;
+			vidrosFormatados = "Não";
+		return vidrosFormatados;
+	}
+	
+	public String getTravasFormatadas() {
+		String travaFormatada = null;
+		if(isTravasEletricas())
+			travaFormatada = "Sim";
+		else 
+			travaFormatada = "Não";
+		return travaFormatada;
 	}
 	
 	@Transient

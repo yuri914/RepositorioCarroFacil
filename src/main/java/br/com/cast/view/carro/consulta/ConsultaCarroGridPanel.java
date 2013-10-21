@@ -44,7 +44,8 @@ public abstract class ConsultaCarroGridPanel extends Panel {
 				item.add(new Label("valor", atual.getValor()));
 				item.add(new Label("arCondicionado", atual.getArFormatado()));
 				item.add(new Label("direcaoHidraulica", atual.getDirecaoFormatada()));
-				item.add(new Label("vtEletrico", atual.getVtFormatado()));
+				item.add(new Label("vidrosEletricos", atual.getVidrosFormatados()));
+				item.add(new Label("travasEletricas", atual.getTravasFormatadas()));
 
 				linkExcluir = new AjaxLink<Carro>("excluir") {
 

@@ -3,14 +3,18 @@
 		<fieldset>
 			<legend>Cadastro de Automoveis</legend>
 				<div class="alert alert-info" wicket:id="mensagens"></div>
-				<label wicket:id="containerMarca" for="marca">Marca: </label>
+				<label wicket:id="containerMarca" for="marca">Marca:</label>
 				<select wicket:id="marca"></select>
-				<label wicket:id="containerModelo" for="modelo">Modelo: </label>
+				<label wicket:id="containerModelo" for="modelo">Modelo:</label>
 				<select wicket:id="modelo"></select>
 				<label wicket:for="cor">Cor: </label>
 				<select wicket:id="cor"></select>
 				<label wicket:for="valor">Valor: </label>
-				<input wicket:id="valor" type="text"></input>
+				<div class="input-prepend input-append">
+					<span class="add-on">R$</span>
+					<input class="span2" wicket:id="valor" type="text"></input>
+					<span class="add-on">,00</span>
+				</div>
 				<label wicket:id="containerAno" for="ano">Ano: </label>
 				<select wicket:id="ano" ></select>
 			   <!--  <label wicket:for="imagem">Imagem:</label>
@@ -21,8 +25,10 @@
 					<input type="checkbox" wicket:id="arCondicionado" />
 					<label wicket:for="direcaoHidraulica">Direção Hidraulica</label>
 					<input type="checkbox" wicket:id="direcaoHidraulica" />
-					<label wicket:for="vtEletrico">Vidros e Travas Eletricas</label>
-					<input type="checkbox" wicket:id="vtEletrico" />
+					<label wicket:for="vidrosEletricos">Vidros Eletricos</label>
+					<input type="checkbox" wicket:id="vidrosEletricos" />
+					<label wicket:for="travasEletricas">Travas Eletricas</label>
+					<input type="checkbox" wicket:id="travasEletricas" />
 				</fieldset>
 		</fieldset>
 		<div id="divBotoes">

@@ -42,8 +42,11 @@ public class DAOCarro implements Serializable {
 		if(carro.isDirecaoHidraulica() == true)
 		sb.append(" and c.direcaoHidraulica = true");
 		
-		if(carro.isVtEletrico() == true)
-		sb.append(" and c.vtEletrico = true");
+		if(carro.isVidrosEletricos() == true)
+		sb.append(" and c.vidrosEletricos = true");
+		
+		if(carro.isTravasEletricas() == true)
+		sb.append(" and c.travasEletricas = true");
 		
 		sb.append(" order by modelo asc");
 		

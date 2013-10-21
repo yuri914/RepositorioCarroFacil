@@ -34,13 +34,15 @@ public abstract class CadastroCarroForm extends Form<Carro> {
 	private DropDownChoice<Cor> dropCor;
 	private CheckBox checkArCondicionado;
 	private CheckBox checkDirecaoHidraulica;
-	private CheckBox checkVtEletrico;
+	private CheckBox checkVidrosEletricos;
 	private TextField<Double> valor;
 	private DropDownChoice<Ano> ano;
 	private Label containerMarca;
 	private Label containerModelo;
 	private Label containerAno;
 	private FileUploadField imagem;
+
+	private CheckBox checkTravasEletricas;
 
 	public CadastroCarroForm(String id, final Carro carro, boolean fluxo) {
 		super(id);
@@ -86,10 +88,15 @@ public abstract class CadastroCarroForm extends Form<Carro> {
 		checkDirecaoHidraulica.setModel(new PropertyModel<Boolean>(carro, "direcaoHidraulica"));
 		add(checkDirecaoHidraulica);
 		
-		checkVtEletrico = new CheckBox("vtEletrico");
-		checkVtEletrico.setOutputMarkupId(true);
-		checkVtEletrico.setModel(new PropertyModel<Boolean>(carro, "vtEletrico"));
-		add(checkVtEletrico);
+		checkVidrosEletricos = new CheckBox("vidrosEletricos");
+		checkVidrosEletricos.setOutputMarkupId(true);
+		checkVidrosEletricos.setModel(new PropertyModel<Boolean>(carro, "vidrosEletricos"));
+		add(checkVidrosEletricos);
+		
+		checkTravasEletricas = new CheckBox("travasEletricas");
+		checkTravasEletricas.setOutputMarkupId(true);
+		checkTravasEletricas.setModel(new PropertyModel<Boolean>(carro, "travasEletricas"));
+		add(checkTravasEletricas);
 		
 		dropMarca = new DropDownChoice<Marca>("marca");
 		dropMarca.setChoices(buscarMarcas());

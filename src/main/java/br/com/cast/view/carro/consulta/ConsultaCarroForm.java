@@ -36,6 +36,8 @@ public abstract class ConsultaCarroForm extends Form {
 	private ConsultaCarroGridPanel gridPanelCarro;
 	private Carro carroConsulta = new Carro();
 	private FeedbackPanel feedback;
+	private CheckBox checkVidrosEletricos;
+	private CheckBox checkTravasEletricas;
 
 	public ConsultaCarroForm(String id) {
 		super(id);
@@ -92,9 +94,13 @@ public abstract class ConsultaCarroForm extends Form {
 		checkDirecaoHidraulica.setModel(new PropertyModel<Boolean>(carroConsulta, "direcaoHidraulica"));
 		add(checkDirecaoHidraulica);
 
-		checkVtEletrico = new CheckBox("vtEletrico");
-		checkVtEletrico.setModel(new PropertyModel<Boolean>(carroConsulta, "vtEletrico"));
-		add(checkVtEletrico);
+		checkVidrosEletricos = new CheckBox("vidrosEletricos");
+		checkVidrosEletricos.setModel(new PropertyModel<Boolean>(carroConsulta, "vidrosEletricos"));
+		add(checkVidrosEletricos);
+		
+		checkTravasEletricas = new CheckBox("travasEletricas");
+		checkTravasEletricas.setModel(new PropertyModel<Boolean>(carroConsulta, "travasEletricas"));
+		add(checkTravasEletricas);
 
 		gridPanelCarro = new ConsultaCarroGridPanel("panelConsulta") {
 
