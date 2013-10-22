@@ -39,10 +39,13 @@ public abstract class ConsultaCarroForm extends Form {
 	private CheckBox checkVidrosEletricos;
 	private CheckBox checkTravasEletricas;
 
-	public ConsultaCarroForm(String id) {
+	public ConsultaCarroForm(String id, String mensagem) {
 		super(id);
 
 		feedback = new FeedbackPanel("mensagens");
+		if (!mensagem.equals("")) {
+			success(mensagem);
+		}
 		feedback.setOutputMarkupId(true);
 		add(feedback);
 
@@ -97,7 +100,7 @@ public abstract class ConsultaCarroForm extends Form {
 		checkVidrosEletricos = new CheckBox("vidrosEletricos");
 		checkVidrosEletricos.setModel(new PropertyModel<Boolean>(carroConsulta, "vidrosEletricos"));
 		add(checkVidrosEletricos);
-		
+
 		checkTravasEletricas = new CheckBox("travasEletricas");
 		checkTravasEletricas.setModel(new PropertyModel<Boolean>(carroConsulta, "travasEletricas"));
 		add(checkTravasEletricas);
@@ -122,8 +125,11 @@ public abstract class ConsultaCarroForm extends Form {
 
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
 				List<Carro> listaCarrosFiltrados = buscarCarroFiltro(carroConsulta, dropMarca.getModelObject());
-				gridPanelCarro.getGridProdutos(listaCarrosFiltrados, QTD_POR_PAGINAS);
-				target.add(gridPanelCarro);
+				if(listaCarrosFiltrados.size() != 0)
+					gridPanelCarro.getGridProdutos(listaCarrosFiltrados, QTD_POR_PAGINAS);
+				else
+					error("Nenhum registro encontrado com o filtro informado.");
+				target.add(gridPanelCarro, feedback);
 			}
 		});
 
@@ -153,7 +159,6 @@ public abstract class ConsultaCarroForm extends Form {
 				RelatorioFactory.gerarRelatorio((HttpServletResponse) getResponse().getContainerResponse(), listarCarros(), relatorioURL, null, pdfFileName);
 			}
 		});
-
 	}
 
 	protected abstract void excluirCarroBanco(Carro atual);

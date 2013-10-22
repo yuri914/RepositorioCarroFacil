@@ -37,8 +37,8 @@ public class CadastroCarroPage extends BasePage {
 
 			private static final long serialVersionUID = -2469288309375780092L;
 
-			protected boolean incluiCarro(Carro carro) {
-				return serviceCarro.incluiCarro(carro);
+			protected boolean persistirCarro(Carro carro) {
+				return serviceCarro.persistirCarroBanco(carro);
 			}
 
 			protected List<Modelo> buscarModelos(Marca marca) {

@@ -45,7 +45,7 @@ public class BasePage extends WebPage {
 			private static final long serialVersionUID = -2523782860411875740L;
 
 			public void onClick() {
-				setResponsePage(ConsultaCarroPage.class);
+				setResponsePage(new ConsultaCarroPage(""));
 			}
 
 		});

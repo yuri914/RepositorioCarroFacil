@@ -19,8 +19,8 @@ public class CarroService implements Serializable {
 	@Autowired
 	private DAOCarro daoCarro = new DAOCarro();
 	
-	public boolean incluiCarro(Carro carro){
-		return daoCarro.isCadastrarCarro(carro);
+	public boolean persistirCarroBanco(Carro carro){
+		return daoCarro.isPersistirCarro(carro);
 	}
 	
 	public List<Carro> listarCarros(){

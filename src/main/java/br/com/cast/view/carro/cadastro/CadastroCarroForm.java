@@ -21,7 +21,7 @@ import br.com.cast.model.Carro;
 import br.com.cast.model.Cor;
 import br.com.cast.model.Marca;
 import br.com.cast.model.Modelo;
-import br.com.cast.persistencia.DAOCarro;
+import br.com.cast.view.carro.consulta.ConsultaCarroPage;
 import br.com.cast.view.index.InicialPage;
 
 public abstract class CadastroCarroForm extends Form<Carro> {
@@ -54,12 +54,14 @@ public abstract class CadastroCarroForm extends Form<Carro> {
 		dropModelo = new DropDownChoice<Modelo>("modelo");
 		dropModelo.setChoiceRenderer(new ChoiceRenderer<Modelo>("descricao"));
 		dropModelo.setModel(new PropertyModel<Modelo>(carro, "modelo"));
+		dropModelo.setLabel(Model.of("Modelo"));
 		dropModelo.setOutputMarkupId(true);
 		dropModelo.setRequired(true);
 		add(dropModelo);
 		
 		valor = new TextField<Double>("valor");
 		valor.setModel(new PropertyModel<Double>(carro, "valor"));
+		valor.setLabel(Model.of("Valor"));
 		valor.setRequired(true);
 		add(valor);
 		
@@ -67,6 +69,7 @@ public abstract class CadastroCarroForm extends Form<Carro> {
 		dropCor.setChoices(buscarCores());
 		dropCor.setChoiceRenderer(new ChoiceRenderer<Cor>("descricao"));
 		dropCor.setModel(new PropertyModel<Cor>(carro, "cor"));
+		dropCor.setLabel(Model.of("Cor"));
 		dropCor.setOutputMarkupId(true);
 		dropCor.setRequired(true);
 		add(dropCor);
@@ -75,6 +78,7 @@ public abstract class CadastroCarroForm extends Form<Carro> {
 		ano.setChoices(listarAno());
 		ano.setModel(new PropertyModel<Ano>(carro, "ano"));
 		ano.setChoiceRenderer(new ChoiceRenderer<Ano>("descricao"));
+		ano.setLabel(Model.of("Ano"));
 		ano.setRequired(true);
 		add(ano);
 		
@@ -115,7 +119,6 @@ public abstract class CadastroCarroForm extends Form<Carro> {
 		});
 		add(dropMarca);
 		
-		
 		/*imagem = new FileUploadField("imagem");
 		DAOCarro daoCarro = new DAOCarro();
 		imagem.setDefaultModelObject(daoCarro.buscarCarro().getImagem());
@@ -126,12 +129,10 @@ public abstract class CadastroCarroForm extends Form<Carro> {
 			
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
 				//carro.setImagem(imagem.getFileUpload().getBytes());
-				if(incluiCarro(carro)){
-					success("Cadastro/Alteração realizada com sucesso.");
-					target.add(feedback, form);
+				if(persistirCarro(carro)){
+					setResponsePage(new ConsultaCarroPage("Cadastro/Alteração realizada com sucesso."));
 				} else {
-					error("Ocorreu um erro ao cadastrar o produto.");
-					target.add(feedback);
+					setResponsePage(new ConsultaCarroPage("Ocorreu um erro ao cadastrar o produto."));
 				}
 			}
 			
@@ -162,13 +163,12 @@ public abstract class CadastroCarroForm extends Form<Carro> {
 		add(containerAno = new Label("containerAno"));
 		containerAno.setDefaultModel(Model.of("Ano"));
 		
-		if (null != carro.getId()){
+		if (fluxo)
 			esconderCampos();
-		}
 	}
 	
 	protected abstract List<Ano> listarAno();
-	protected abstract boolean incluiCarro(Carro carro);
+	protected abstract boolean persistirCarro(Carro carro);
 	protected abstract List<Modelo> buscarModelos(Marca marca);
 	protected abstract List<Marca> buscarMarcas();
 	protected abstract List<Cor> buscarCores();

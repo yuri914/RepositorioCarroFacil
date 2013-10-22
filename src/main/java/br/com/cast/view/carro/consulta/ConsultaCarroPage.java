@@ -25,9 +25,9 @@ public class ConsultaCarroPage extends BasePage {
 	@SpringBean
 	private CarroService serviceCarro;
 	
-	public ConsultaCarroPage(){
+	public ConsultaCarroPage(String mensagem){
 		super("Consulta de Veiculos");
-		add(new ConsultaCarroForm("consultaFormulario"){
+		add(new ConsultaCarroForm("consultaFormulario", mensagem){
 
 			private static final long serialVersionUID = 474947395775203059L;
 

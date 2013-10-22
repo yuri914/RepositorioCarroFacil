@@ -14,7 +14,7 @@ public class DAOCarro implements Serializable {
 
 	private static final long serialVersionUID = -2744271054684693626L;
 	
-	public boolean isCadastrarCarro(Carro carro){
+	public boolean isPersistirCarro(Carro carro){
 		return HibernateUtil.salvar(carro);
 	}
 	
