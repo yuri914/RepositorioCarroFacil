@@ -6,22 +6,28 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.request.resource.ByteArrayResource;
 
 import br.com.cast.componentes.util.RelatorioFactory;
 import br.com.cast.model.Carro;
 import br.com.cast.model.Marca;
 import br.com.cast.model.Modelo;
+import br.com.cast.persistencia.DAOCarro;
 
 public abstract class ConsultaCarroForm extends Form {
 
@@ -32,12 +38,12 @@ public abstract class ConsultaCarroForm extends Form {
 	private DropDownChoice<Integer> dropRegistrosPaginacao;
 	private CheckBox checkArCondicionado;
 	private CheckBox checkDirecaoHidraulica;
-	private CheckBox checkVtEletrico;
 	private ConsultaCarroGridPanel gridPanelCarro;
 	private Carro carroConsulta = new Carro();
 	private FeedbackPanel feedback;
 	private CheckBox checkVidrosEletricos;
 	private CheckBox checkTravasEletricas;
+	private ModalWindow modal;
 
 	public ConsultaCarroForm(String id, String mensagem) {
 		super(id);
@@ -65,7 +71,7 @@ public abstract class ConsultaCarroForm extends Form {
 
 			protected void onUpdate(AjaxRequestTarget target) {
 				if (dropRegistrosPaginacao.getModelObject() != null) {
-					gridPanelCarro.getGridProdutos(listarCarros(), dropRegistrosPaginacao.getModelObject());
+					gridPanelCarro.setGridProdutos(listarCarros(), dropRegistrosPaginacao.getModelObject());
 					target.add(gridPanelCarro);
 				}
 			}
@@ -105,6 +111,11 @@ public abstract class ConsultaCarroForm extends Form {
 		checkTravasEletricas.setModel(new PropertyModel<Boolean>(carroConsulta, "travasEletricas"));
 		add(checkTravasEletricas);
 
+		modal = new ModalWindow("modalWindow");
+		modal.setMinimalHeight(400);
+		modal.setMinimalWidth(267);
+		add(modal);
+
 		gridPanelCarro = new ConsultaCarroGridPanel("panelConsulta") {
 
 			private static final long serialVersionUID = -8651320159597446128L;
@@ -112,11 +123,17 @@ public abstract class ConsultaCarroForm extends Form {
 			@Override
 			protected void excluirCarro(Carro atual, AjaxRequestTarget target) {
 				excluirCarroBanco(atual);
-				gridPanelCarro.getGridProdutos(listarCarros(), QTD_POR_PAGINAS);
+				gridPanelCarro.setGridProdutos(listarCarros(), QTD_POR_PAGINAS);
 				target.add(gridPanelCarro);
 			}
+
+			@Override
+			protected void exibirImagem(Carro atual, AjaxRequestTarget target) {
+				modal.setContent(new ModalPanel(modal.getContentId(), atual));
+				modal.show(target);
+			}
 		};
-		gridPanelCarro.getGridProdutos(listarCarros(), QTD_POR_PAGINAS);
+		gridPanelCarro.setGridProdutos(listarCarros(), QTD_POR_PAGINAS);
 		add(gridPanelCarro);
 
 		add(new AjaxButton("buscar") {
@@ -125,8 +142,8 @@ public abstract class ConsultaCarroForm extends Form {
 
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
 				List<Carro> listaCarrosFiltrados = buscarCarroFiltro(carroConsulta, dropMarca.getModelObject());
-				if(listaCarrosFiltrados.size() != 0)
-					gridPanelCarro.getGridProdutos(listaCarrosFiltrados, QTD_POR_PAGINAS);
+				if (listaCarrosFiltrados.size() != 0)
+					gridPanelCarro.setGridProdutos(listaCarrosFiltrados, QTD_POR_PAGINAS);
 				else
 					error("Nenhum registro encontrado com o filtro informado.");
 				target.add(gridPanelCarro, feedback);
@@ -138,7 +155,7 @@ public abstract class ConsultaCarroForm extends Form {
 			private static final long serialVersionUID = 6292852912816686898L;
 
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-				gridPanelCarro.getGridProdutos(listarCarros(), 10);
+				gridPanelCarro.setGridProdutos(listarCarros(), 10);
 				target.add(gridPanelCarro);
 			}
 
@@ -154,7 +171,7 @@ public abstract class ConsultaCarroForm extends Form {
 
 			@Override
 			public void onSubmit() {
-				String relatorioURL = "C:\\Users\\Yuri\\Estudo\\WorkSpaces\\Git WorkSpace\\SistemaCarroFacil\\src\\main\\java\\br\\com\\cast\\componentes\\util\\relatorios\\RelatorioCarroFacil.jasper";
+				String relatorioURL = "C:\\Users\\yuri88\\git\\RepositorioCarroFacil\\src\\main\\java\\br\\com\\cast\\componentes\\util\\relatorios\\RelatorioCarroFacil.jasper";
 				String pdfFileName = "Relatorio";
 				RelatorioFactory.gerarRelatorio((HttpServletResponse) getResponse().getContainerResponse(), listarCarros(), relatorioURL, null, pdfFileName);
 			}

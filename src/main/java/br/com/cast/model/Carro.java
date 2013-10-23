@@ -53,6 +53,9 @@ public class Carro implements Serializable {
 	@Column(name = "TRAVAS_ELETRICAS")
 	private boolean travasEletricas;
 	
+	@Column(name = "imagem")
+	private byte[] imagem;
+	
 	@Transient
 	private String arFormatado;
 	
@@ -132,6 +135,14 @@ public class Carro implements Serializable {
 
 	public void setValor(Double valor) {
 		this.valor = valor;
+	}
+
+	public byte[] getImagem() {
+		return imagem;
+	}
+
+	public void setImagem(byte[] imagem) {
+		this.imagem = imagem;
 	}
 
 	public String getArFormatado() {

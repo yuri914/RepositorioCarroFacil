@@ -16,9 +16,8 @@ import br.com.cast.view.carro.cadastro.CadastroCarroPage;
 
 public abstract class ConsultaCarroGridPanel extends Panel {
 
-
 	private static final long serialVersionUID = -8320411276346582466L;
-	
+
 	private AjaxLink<Carro> linkExcluir;
 
 	public ConsultaCarroGridPanel(String id) {
@@ -28,9 +27,8 @@ public abstract class ConsultaCarroGridPanel extends Panel {
 
 	}
 
-	public void getGridProdutos(List<Carro> listaCarros, Integer qtdPaginas) {
-		DataView<Carro> repetidor = new DataView<Carro>("carros",
-				new ListDataProvider<Carro>(listaCarros), qtdPaginas) {
+	public void setGridProdutos(List<Carro> listaCarros, Integer qtdPaginas) {
+		DataView<Carro> repetidor = new DataView<Carro>("carros", new ListDataProvider<Carro>(listaCarros), qtdPaginas) {
 
 			private static final long serialVersionUID = 3602598736257950767L;
 
@@ -55,7 +53,6 @@ public abstract class ConsultaCarroGridPanel extends Panel {
 						excluirCarro(atual, target);
 					}
 				};
-
 				item.add(linkExcluir);
 
 				item.add(new AjaxLink<Carro>("alterar") {
@@ -66,6 +63,16 @@ public abstract class ConsultaCarroGridPanel extends Panel {
 						setResponsePage(new CadastroCarroPage(atual, true));
 					}
 				});
+
+				item.add(new AjaxLink<Void>("visualizar") {
+
+					private static final long serialVersionUID = 570032314068595481L;
+
+					public void onClick(AjaxRequestTarget target) {
+						exibirImagem(atual, target);
+					}
+
+				});
 			}
 
 		};
@@ -74,5 +81,6 @@ public abstract class ConsultaCarroGridPanel extends Panel {
 	}
 
 	protected abstract void excluirCarro(Carro atual, AjaxRequestTarget target);
-	
+
+	protected abstract void exibirImagem(Carro atual, AjaxRequestTarget target);
 }

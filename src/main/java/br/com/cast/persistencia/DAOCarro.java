@@ -58,7 +58,7 @@ public class DAOCarro implements Serializable {
 	}
 	
 	public Carro buscarCarro(){
-		return (Carro) HibernateUtil.entityManager.createQuery("from Carro c where c.id = 3");
+		return (Carro) HibernateUtil.entityManager.createQuery("from Carro c where c.id = 4").getSingleResult();
 	}
 	
 }

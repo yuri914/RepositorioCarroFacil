@@ -119,21 +119,18 @@ public abstract class CadastroCarroForm extends Form<Carro> {
 		});
 		add(dropMarca);
 		
-		/*imagem = new FileUploadField("imagem");
-		DAOCarro daoCarro = new DAOCarro();
-		imagem.setDefaultModelObject(daoCarro.buscarCarro().getImagem());
-		add(imagem);*/
+		imagem = new FileUploadField("imagem");
+		add(imagem);
 		
 		add(new AjaxButton("salvar"){
 			private static final long serialVersionUID = 2450953576382428406L;
 			
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-				//carro.setImagem(imagem.getFileUpload().getBytes());
-				if(persistirCarro(carro)){
+				carro.setImagem(imagem.getFileUpload().getBytes());
+				if(persistirCarro(carro))
 					setResponsePage(new ConsultaCarroPage("Cadastro/Alteração realizada com sucesso."));
-				} else {
+				 else
 					setResponsePage(new ConsultaCarroPage("Ocorreu um erro ao cadastrar o produto."));
-				}
 			}
 			
 			protected void onError(AjaxRequestTarget target, Form<?> form) {
